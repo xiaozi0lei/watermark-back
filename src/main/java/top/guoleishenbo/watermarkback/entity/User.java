@@ -1,5 +1,7 @@
 package top.guoleishenbo.watermarkback.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -17,6 +19,7 @@ public class User {
 
     private static final long serialVersionUID = 1L;
 
+    @TableId(type = IdType.AUTO)
     private Long id;
     /**
      * 姓名

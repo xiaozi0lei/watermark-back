@@ -10,11 +10,11 @@ public class LoginDto {
     // wx code
     private String code;
     // wx 加密用户数据
-    private String data;
+    private String encryptedData;
     // wx 加密算法的初始向量
     private String iv;
-    //原始数据字符串
-    private String signature;
-    //校验用户信息字符串
-    private String rawData;
+//    //原始数据字符串
+//    private String signature;
+//    //校验用户信息字符串
+//    private String rawData;
 }
