@@ -97,6 +97,8 @@ public class DouYinStrategyImpl implements VideoStrategy {
         // 通过 uri 调用接口获取视频
         String playUrl = "https://aweme.snssdk.com/aweme/v1/play?video_id=" + videoId + "&ratio=720&line=0";
         videoInfo.setNoWaterUrl(playUrl);
+        System.out.println("video url : " + videoUrl);
+        System.out.println("play url : " + playUrl);
 //        HttpHeaders headersPlay = new HttpHeaders();
 //        headersPlay.set("user-agent",
 //                "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.97 Safari/537.36");

@@ -13,6 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.common.error.WxErrorException;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import top.guoleishenbo.watermarkback.entity.User;
 import top.guoleishenbo.watermarkback.entity.dto.LoginDto;
@@ -32,6 +33,11 @@ import java.util.Objects;
 @Service
 @Slf4j
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IUserService {
+
+    @Value("${wx.appId}")
+    private String appId;
+    @Value("${wx.appSecret}")
+    private String appSecret;
 
     private UserMapper userMapper;
 
@@ -106,8 +112,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 
     private WxMaService getWxMaService() {
         WxMaDefaultConfigImpl config = new WxMaDefaultConfigImpl();
-        config.setAppid("wx1f28f894441ebdd6");
-        config.setSecret("2aacd11d60507869f6ef5254f752b21a");
+        config.setAppid(appId);
+        config.setSecret(appSecret);
         config.setMsgDataFormat("JSON");
         WxMaService wxMaService = new WxMaServiceImpl();
         wxMaService.setWxMaConfig(config);
