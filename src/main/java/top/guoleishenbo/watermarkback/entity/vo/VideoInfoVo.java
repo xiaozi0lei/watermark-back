@@ -4,6 +4,8 @@ import lombok.Data;
 
 @Data
 public class VideoInfoVo {
-    private String noWaterUrl;
+    private String playUrl;
+    private String saveUrl;
+    private String downloadUrl;
     private String imageUrl;
 }

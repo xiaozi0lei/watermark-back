@@ -98,22 +98,23 @@ public class DouYinStrategyImpl implements VideoStrategy {
             e.printStackTrace();
         }
         // 通过 uri 调用接口获取视频
-        String playUrl = "https://aweme.snssdk.com/aweme/v1/play/?video_id=" + videoId + "&ratio=720&line=0";
-        videoInfo.setNoWaterUrl(playUrl);
+        String downloadUrl = "https://aweme.snssdk.com/aweme/v1/play/?video_id=" + videoId + "&ratio=720&line=0";
+        videoInfo.setDownloadUrl(downloadUrl);
         System.out.println("video url : " + videoUrl);
 
         HttpHeaders headersPlay = new HttpHeaders();
         headersPlay.set("user-agent",
                 "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.97 Safari/537.36");
         HttpEntity<String> resultPlay = laxRestTemplate
-                .exchange(playUrl, HttpMethod.GET, new HttpEntity<>(null, headersPlay),
+                .exchange(downloadUrl, HttpMethod.GET, new HttpEntity<>(null, headersPlay),
                         String.class);
 
         URI location = resultPlay.getHeaders().getLocation();
         if (location != null) {
             System.out.println("play url : " + location.toString());
 
-            videoInfo.setNoWaterUrl(location.toString());
+            videoInfo.setPlayUrl(location.toString());
+            videoInfo.setSaveUrl(location.toString());
         }
 
         result.setData(videoInfo);
