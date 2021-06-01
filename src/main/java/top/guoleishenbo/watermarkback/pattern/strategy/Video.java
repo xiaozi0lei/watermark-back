@@ -1,5 +1,6 @@
 package top.guoleishenbo.watermarkback.pattern.strategy;
 
+import top.guoleishenbo.watermarkback.entity.base.BaseResponse;
 import top.guoleishenbo.watermarkback.entity.vo.VideoInfoVo;
 
 public class Video {
@@ -9,7 +10,7 @@ public class Video {
         this.strategy = strategy;
     }
 
-    public VideoInfoVo parse(String videoUrl) {
+    public BaseResponse<VideoInfoVo> parse(String videoUrl) {
         return this.strategy.parse(videoUrl);
     }
 }

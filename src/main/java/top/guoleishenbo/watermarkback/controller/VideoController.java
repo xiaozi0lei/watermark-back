@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
+import top.guoleishenbo.watermarkback.entity.base.BaseResponse;
 import top.guoleishenbo.watermarkback.entity.vo.VideoInfoVo;
 import top.guoleishenbo.watermarkback.pattern.strategy.Impl.DouYinStrategyImpl;
 import top.guoleishenbo.watermarkback.pattern.strategy.Video;
@@ -23,7 +24,7 @@ public class VideoController {
     }
 
     @PostMapping("/parse")
-    public VideoInfoVo parse(@RequestBody String videoUrl) {
+    public BaseResponse parse(@RequestBody String videoUrl) {
         String url = UrlUtility.findUrlByStr(videoUrl);
         VideoStrategy strategy = null;
 

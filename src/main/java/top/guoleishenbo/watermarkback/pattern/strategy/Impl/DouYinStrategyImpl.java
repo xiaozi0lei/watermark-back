@@ -10,7 +10,9 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
+import top.guoleishenbo.watermarkback.entity.base.BaseResponse;
 import top.guoleishenbo.watermarkback.entity.vo.VideoInfoVo;
+import top.guoleishenbo.watermarkback.pattern.strategy.Video;
 import top.guoleishenbo.watermarkback.pattern.strategy.VideoStrategy;
 
 import java.net.URI;
@@ -29,7 +31,8 @@ public class DouYinStrategyImpl implements VideoStrategy {
     }
 
     @Override
-    public VideoInfoVo parse(String videoUrl) {
+    public BaseResponse<VideoInfoVo> parse(String videoUrl) {
+        BaseResponse<VideoInfoVo> result = new BaseResponse<>();
         String url = null;
         String itemId = null;
         VideoInfoVo videoInfo = new VideoInfoVo();
@@ -95,23 +98,26 @@ public class DouYinStrategyImpl implements VideoStrategy {
             e.printStackTrace();
         }
         // 通过 uri 调用接口获取视频
-        String playUrl = "https://aweme.snssdk.com/aweme/v1/play?video_id=" + videoId + "&ratio=720&line=0";
+        String playUrl = "https://aweme.snssdk.com/aweme/v1/play/?video_id=" + videoId + "&ratio=720&line=0";
         videoInfo.setNoWaterUrl(playUrl);
         System.out.println("video url : " + videoUrl);
-        System.out.println("play url : " + playUrl);
-//        HttpHeaders headersPlay = new HttpHeaders();
-//        headersPlay.set("user-agent",
-//                "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.97 Safari/537.36");
-//        HttpEntity<String> resultPlay = laxRestTemplate
-//                .exchange(playUrl, HttpMethod.GET, new HttpEntity<>(null, headersPlay),
-//                        String.class);
-//
-//        URI location = resultPlay.getHeaders().getLocation();
-//        if (location != null) {
-//            videoInfo.setNoWaterUrl(location.toString());
-//        }
 
-        return videoInfo;
+        HttpHeaders headersPlay = new HttpHeaders();
+        headersPlay.set("user-agent",
+                "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.97 Safari/537.36");
+        HttpEntity<String> resultPlay = laxRestTemplate
+                .exchange(playUrl, HttpMethod.GET, new HttpEntity<>(null, headersPlay),
+                        String.class);
+
+        URI location = resultPlay.getHeaders().getLocation();
+        if (location != null) {
+            System.out.println("play url : " + location.toString());
+
+            videoInfo.setNoWaterUrl(location.toString());
+        }
+
+        result.setData(videoInfo);
+        return result;
     }
 
     public static void main(String[] args) {
