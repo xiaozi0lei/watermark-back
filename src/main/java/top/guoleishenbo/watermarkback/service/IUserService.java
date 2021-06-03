@@ -15,4 +15,6 @@ import top.guoleishenbo.watermarkback.entity.dto.LoginDto;
  */
 public interface IUserService extends IService<User> {
     JSONObject firstOrCreate(LoginDto loginDto);
+
+    JSONObject updateInfo(LoginDto loginDto);
 }

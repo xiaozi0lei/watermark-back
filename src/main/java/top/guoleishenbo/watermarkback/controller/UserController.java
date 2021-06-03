@@ -35,5 +35,10 @@ public class UserController {
         // 根据 openid 查询用户是否存在，存在更新 token，不存在创建用户，关联 openid，返回新 token
         return userService.firstOrCreate(loginDto);
     }
+
+    @PostMapping("/updateInfo")
+    public JSONObject updateInfo(@RequestBody LoginDto loginDto) {
+        return userService.updateInfo(loginDto);
+    }
 }
 
