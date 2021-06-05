@@ -5,9 +5,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
+import top.guoleishenbo.watermarkback.annotation.TokenValidate;
 import top.guoleishenbo.watermarkback.entity.base.BaseResponse;
-import top.guoleishenbo.watermarkback.entity.vo.VideoInfoVo;
 import top.guoleishenbo.watermarkback.pattern.strategy.Impl.DouYinStrategyImpl;
+import top.guoleishenbo.watermarkback.pattern.strategy.Impl.WeiShiStrategyImpl;
 import top.guoleishenbo.watermarkback.pattern.strategy.Video;
 import top.guoleishenbo.watermarkback.pattern.strategy.VideoStrategy;
 import top.guoleishenbo.watermarkback.utility.http.UrlUtility;
@@ -24,12 +25,16 @@ public class VideoController {
     }
 
     @PostMapping("/parse")
+    @TokenValidate
     public BaseResponse parse(@RequestBody String videoUrl) {
+        // 获取正确的播放地址
         String url = UrlUtility.findUrlByStr(videoUrl);
-        VideoStrategy strategy = null;
+        VideoStrategy strategy;
 
         if (url.contains("douyin.com") || url.contains("iesdouyin.com")) {
             strategy = new DouYinStrategyImpl(restTemplate, laxRestTemplate);
+        } else if (url.contains("weishi.qq.com")) {
+            strategy = new WeiShiStrategyImpl(restTemplate, laxRestTemplate);
         } else {
             throw new RuntimeException("不支持的视频格式");
         }

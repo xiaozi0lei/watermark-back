@@ -12,7 +12,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import top.guoleishenbo.watermarkback.entity.base.BaseResponse;
 import top.guoleishenbo.watermarkback.entity.vo.VideoInfoVo;
-import top.guoleishenbo.watermarkback.pattern.strategy.Video;
 import top.guoleishenbo.watermarkback.pattern.strategy.VideoStrategy;
 
 import java.net.URI;
@@ -53,26 +52,28 @@ public class DouYinStrategyImpl implements VideoStrategy {
             HttpEntity<String> res = laxRestTemplate
                     .exchange(videoUrl, HttpMethod.GET, new HttpEntity<>(null, headers),
                             String.class);
+            System.out.println(res);
+
             URI location = res.getHeaders().getLocation();
             if (location != null) {
                 url = location.toString();
             }
-            // 处理 url 拿到 item_id
-            String patternString = "/video/([0-9]+)/";
-
-            // 创建 Pattern 对象
-            Pattern pattern = Pattern.compile(patternString);
-
-            // 现在创建 matcher 对象
-            Matcher m = pattern.matcher(url);
-            if (m.find()) {
-                System.out.println("Found value: " + m.group(0));
-                itemId = m.group(1);
-            } else {
-                System.out.println("NO MATCH");
-            }
-            System.out.println(res);
         }
+        // 处理 url 拿到 item_id
+        String patternString = "/video/([0-9]+)/";
+
+        // 创建 Pattern 对象
+        Pattern pattern = Pattern.compile(patternString);
+
+        // 现在创建 matcher 对象
+        Matcher m = pattern.matcher(url);
+        if (m.find()) {
+            System.out.println("Found value: " + m.group(0));
+            itemId = m.group(1);
+        } else {
+            System.out.println("NO MATCH");
+        }
+
         // 通过 item_id 调用接口获取水印视频接口返回信息，获取 play_addr uri
         String itemInfoUrl = "https://www.iesdouyin.com/web/api/v2/aweme/iteminfo?item_ids=" + itemId;
         HttpHeaders headers = new HttpHeaders();

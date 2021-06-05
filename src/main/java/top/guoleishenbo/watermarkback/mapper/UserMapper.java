@@ -1,11 +1,11 @@
 package top.guoleishenbo.watermarkback.mapper;
 
-import top.guoleishenbo.watermarkback.entity.User;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import top.guoleishenbo.watermarkback.entity.User;
 
 /**
  * <p>
- *  Mapper 接口
+ * Mapper 接口
  * </p>
  *
  * @author sunni
