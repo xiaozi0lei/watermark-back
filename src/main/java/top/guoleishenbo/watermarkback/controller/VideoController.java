@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 import top.guoleishenbo.watermarkback.annotation.TokenValidate;
 import top.guoleishenbo.watermarkback.entity.base.BaseResponse;
+import top.guoleishenbo.watermarkback.pattern.strategy.Impl.BiliStrategyImpl;
 import top.guoleishenbo.watermarkback.pattern.strategy.Impl.DouYinStrategyImpl;
 import top.guoleishenbo.watermarkback.pattern.strategy.Impl.WeiShiStrategyImpl;
 import top.guoleishenbo.watermarkback.pattern.strategy.Video;
@@ -35,6 +36,8 @@ public class VideoController {
             strategy = new DouYinStrategyImpl(restTemplate, laxRestTemplate);
         } else if (url.contains("weishi.qq.com")) {
             strategy = new WeiShiStrategyImpl(restTemplate, laxRestTemplate);
+        } else if (url.contains("b23.tv")) {
+            strategy = new BiliStrategyImpl(restTemplate, laxRestTemplate);
         } else {
             throw new RuntimeException("不支持的视频格式");
         }
