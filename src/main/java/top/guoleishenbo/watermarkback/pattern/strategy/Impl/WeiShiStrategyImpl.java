@@ -31,7 +31,7 @@ public class WeiShiStrategyImpl implements VideoStrategy {
         String feedId = null;
         VideoInfoVo videoInfo = new VideoInfoVo();
         // 处理 url 拿到 feedId
-        String patternString = "id=(.*?)&spid";
+        String patternString = "id=(.*?)&";
 
         // 创建 Pattern 对象
         Pattern pattern = Pattern.compile(patternString);

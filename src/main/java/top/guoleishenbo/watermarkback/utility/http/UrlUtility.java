@@ -9,6 +9,7 @@ public class UrlUtility {
         Pattern pattern = Pattern.compile("https?://[-A-Za-z0-9+&@#/%?=~_|!:,.;]+[-A-Za-z0-9+&@#/%=~_|]");
         Matcher matcher = pattern.matcher(data);
         if (matcher.find()) {
+            System.out.println("截取的url为：" + matcher.group());
             return matcher.group();
         }
         return "";
